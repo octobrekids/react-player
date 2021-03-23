@@ -2,11 +2,7 @@ import React from 'react';
 import './App.css';
 import { Row, Col, Button } from 'antd';
 import ReactPlayer from 'react-player';
-// top: 50%;
-// left: 50%;
-// position: absolute;
-// transform: translate(-50%,-50%);
-// text-align: center;
+import { CaretRightOutlined, ForwardOutlined, BackwardOutlined, PauseOutlined } from '@ant-design/icons'
 
 function App() {
   return (
@@ -18,17 +14,42 @@ function App() {
             height="100%"
             muted={true}
             playing={true} />
-          <div className="controlsWrapper">
-            <Row justify="space-between" style={{padding:16}}>
+
+          {/*top controls */}
+          <div className="controlsWrapper" >
+            <Row justify="space-between" style={{ padding: 16 }}>
               <Col>
-                <h5>Video Title</h5>
+                <h4 style={{ color: "white" }}>Video Title</h4>
               </Col>
               <Col>
-              <Button>Bookmark
+                <Button>Bookmark
                 </Button></Col>
             </Row>
           </div>
         </div>
+
+        {/*middle controls*/}
+
+        <Row justify="center">
+          <Col>
+            <div className="controlIcons">
+              <BackwardOutlined />
+            </div>
+          </Col>
+          <Col>
+            <div className="controlIcons">
+              <CaretRightOutlined />
+            </div>
+          </Col>
+          <Col>
+            <div className="controlIcons">
+              <ForwardOutlined />
+            </div>
+          </Col>
+        </Row>
+
+
+
       </Col>
     </Row>
   );
