@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "antd": "^4.14.1",
-    "prettier-eslint-cli": "^5.0.1"
+    "prettier": "^2.2.1",
+    "prettier-eslint-cli": "^5.0.1",
+    "prettierrc": "^0.0.0-5"
   }
 }
