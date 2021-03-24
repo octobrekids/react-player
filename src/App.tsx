@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import "./App.css";
-import { Row, Col } from "antd";
-import ReactPlayer from "react-player";
-import PlayerControl from "./components/PlayerControl/PlayerControl";
-import { useDispatch, useSelector } from "react-redux";
-import { StoresState } from "./stores";
-import { setPlaying } from "./stores/videoReducer";
+import React, { useRef } from 'react';
+import './App.css';
+import { Row, Col } from 'antd';
+import ReactPlayer from 'react-player';
+import PlayerControl from './components/PlayerControl/PlayerControl';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoresState } from './stores';
+import { setMuted, setPlaying } from './stores/videoReducer';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +33,10 @@ function App() {
     }
   };
 
+  const handleMute = () => {
+    dispatch(setMuted());
+  };
+
   return (
     <Row justify="center">
       <Col span={10}>
@@ -51,6 +55,7 @@ function App() {
             handleRewind={handleRewind}
             handleFastForward={handleFastForward}
             handlePlaying={handlePlaying}
+            handleMute={handleMute}
           />
         </div>
       </Col>
