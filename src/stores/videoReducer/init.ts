@@ -1,7 +1,7 @@
-import { initVideoPlayerStateType } from "./type";
+import { initVideoPlayerStateType } from './type';
 
 export const initVideoPlayerState: initVideoPlayerStateType = {
-    muted: false,
-    playing: false,
-    volume: 50
+	muted: false,
+	playing: false,
+	volume: 50,
 };
