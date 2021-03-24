@@ -5,11 +5,11 @@ const videoPlayerSlice = createSlice({
     name: 'videoPlayer',
     initialState: initVideoPlayerState,
     reducers: {
-        setMuted(state, action: PayloadAction<{muted: boolean}>) {
+        setMuted(state) {
             state.muted =  !state.muted;
         },
-        setPlaying(state, action: PayloadAction<{playing: boolean}>) {
-            state.playing =  !action.payload.playing;
+        setPlaying(state) {
+            state.playing =  !state.playing;
         },
     }
 })

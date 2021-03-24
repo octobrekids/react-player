@@ -1,6 +1,7 @@
 import { Row, Col, Button, Slider, Dropdown, Menu } from 'antd'
 import React from 'react'
 import { CaretRightOutlined, ExpandOutlined, ForwardOutlined, BackwardOutlined, SoundOutlined, PauseOutlined } from '@ant-design/icons'
+import { PlayerControlPropsType } from './type';
 const menu = (
     <Menu>
         <Menu.Item>
@@ -18,7 +19,10 @@ const menu = (
     </Menu>
 
 );
-const PlayerControl = () => {
+
+const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
+    const { playing, muted, handlePlaying } = props;
+
     return (
         <div>
 
@@ -43,7 +47,7 @@ const PlayerControl = () => {
                     </Col>
                     <Col>
                         <div className="controlIcons">
-                            <CaretRightOutlined />
+                            {playing ? <PauseOutlined onClick={() => handlePlaying()} /> : <CaretRightOutlined onClick={() => handlePlaying()} />}
                         </div>
                     </Col>
                     <Col>
@@ -100,9 +104,7 @@ const PlayerControl = () => {
                                 </Col>
                             </Row>
                         </Col>
-
                     </Row>
-
                 </div>
             </div>
         </div>
