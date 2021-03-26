@@ -12,13 +12,7 @@ import {
 import { PlayerControlPropsType } from './type';
 
 const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
-	const {
-		playing,
-		muted,
-		handlePlaying,
-		handleFastForward,
-		handleRewind,
-	} = props;
+	const { playing, muted, onPlaying, onFastForward, onRewind, onMute } = props;
 
 	const menu = (
 		<Menu>
@@ -44,21 +38,21 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		<Row justify="center">
 			<Col>
 				<div className="controlIcons">
-					<BackwardOutlined onClick={() => handleRewind()} />
+					<BackwardOutlined onClick={() => onRewind()} />
 				</div>
 			</Col>
 			<Col>
 				<div className="controlIcons">
 					{playing ? (
-						<PauseOutlined onClick={() => handlePlaying()} />
+						<PauseOutlined onClick={() => onPlaying()} />
 					) : (
-						<CaretRightOutlined onClick={() => handlePlaying()} />
+						<CaretRightOutlined onClick={() => onPlaying()} />
 					)}
 				</div>
 			</Col>
 			<Col>
 				<div className="controlIcons">
-					<ForwardOutlined onClick={() => handleFastForward()} />
+					<ForwardOutlined onClick={() => onFastForward()} />
 				</div>
 			</Col>
 		</Row>
@@ -82,7 +76,11 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 						</Col>
 						<Col>
 							<div className="bottomIcons">
-								{muted ? <NotificationOutlined /> : <SoundOutlined />}
+								{muted ? (
+									<NotificationOutlined onClick={() => onMute()} />
+								) : (
+									<SoundOutlined onClick={() => onMute()} />
+								)}
 							</div>
 						</Col>
 						<Col span={8}>
