@@ -52,10 +52,10 @@ function App() {
 					<PlayerControl
 						muted={muted}
 						playing={playing}
-						handleRewind={handleRewind}
-						handleFastForward={handleFastForward}
-						handlePlaying={handlePlaying}
-						handleMute={handleMute}
+						onRewind={handleRewind}
+						onFastForward={handleFastForward}
+						onPlaying={handlePlaying}
+						onMute={handleMute}
 					/>
 				</div>
 			</Col>

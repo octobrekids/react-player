@@ -1,11 +1,11 @@
-import { initVideoPlayerStateType } from "../../stores/videoReducer/type";
+import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
 
 export type PlayerControlPropsType = Omit<
-  initVideoPlayerStateType,
-  "volume"
+	initVideoPlayerStateType,
+	'volume'
 > & {
-  handlePlaying: () => void;
-  handleFastForward: () => void;
-  handleRewind: () => void;
-  handleMute: () => void;
+	onPlaying: () => void;
+	onFastForward: () => void;
+	onRewind: () => void;
+	onMute: () => void;
 };
