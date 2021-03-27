@@ -12,7 +12,17 @@ import {
 import { PlayerControlPropsType } from './type';
 
 const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
-	const { playing, muted, onPlaying, onFastForward, onRewind, onMute } = props;
+	const {
+		playing,
+		muted,
+		onPlaying,
+		onFastForward,
+		onRewind,
+		onMute,
+		onVolumeChange,
+		onVolumeSeekDown,
+		volume,
+	} = props;
 
 	const menu = (
 		<Menu>
@@ -85,7 +95,13 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 						</Col>
 						<Col span={8}>
 							<div className="volumeSlider">
-								<Slider defaultValue={30} />
+								<Slider
+									min={0}
+									max={100}
+									value={muted ? 0 : volume * 100}
+									onAfterChange={(value: number) => onVolumeSeekDown(value)}
+									onChange={(value: number) => onVolumeChange(value)}
+								/>
 							</div>
 						</Col>
 						<Col>
