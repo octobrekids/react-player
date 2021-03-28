@@ -5,12 +5,7 @@ import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoresState } from './stores';
-import {
-	setMuted,
-	setPlaying,
-	setVolume,
-	setVolumeSeekDown,
-} from './stores/videoReducer';
+import { setMuted, setPlaying, setVolume } from './stores/videoReducer';
 
 function App() {
 	const dispatch = useDispatch();
@@ -22,9 +17,6 @@ function App() {
 	);
 	const muted = useSelector((state: StoresState) => state.videoPlayer.muted);
 	const volume = useSelector((state: StoresState) => state.videoPlayer.volume);
-	const seeking = useSelector(
-		(state: StoresState) => state.videoPlayer.seeking
-	);
 
 	const handlePlaying = () => {
 		dispatch(setPlaying());
@@ -44,6 +36,9 @@ function App() {
 
 	const handleMute = () => {
 		dispatch(setMuted());
+		if (muted !== false) {
+			setVolume({ volume: 50 / 100, muted: false });
+		}
 	};
 
 	const handleVolumeChange = (value: number) => {
@@ -56,7 +51,16 @@ function App() {
 	};
 
 	const handleVolumeSeekDown = (value: number) => {
-		dispatch(setVolumeSeekDown({ volume: value / 100 }));
+		dispatch(
+			setVolume({
+				volume: value / 100,
+				muted: value === 0 ? true : false,
+			})
+		);
+	};
+
+	const handlePlaybackRateChange = (value: number) => {
+		dispatch(setPlaybackRate);
 	};
 
 	return (
@@ -71,11 +75,9 @@ function App() {
 						muted={muted}
 						playing={playing}
 						volume={volume}
-						seeking={seeking}
 					/>
 					<PlayerControl
 						muted={muted}
-						seeking={seeking}
 						volume={volume}
 						playing={playing}
 						onRewind={handleRewind}
@@ -84,6 +86,7 @@ function App() {
 						onMute={handleMute}
 						onVolumeChange={handleVolumeChange}
 						onVolumeSeekDown={handleVolumeSeekDown}
+						onPlaybackRateChange={onPlaybackRateChange}
 					/>
 				</div>
 			</Col>

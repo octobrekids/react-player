@@ -22,6 +22,8 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		onVolumeChange,
 		onVolumeSeekDown,
 		volume,
+		playbackRate,
+		onPlaybackRate,
 	} = props;
 
 	const menu = (
@@ -81,7 +83,11 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 					<Row justify="space-around">
 						<Col>
 							<div className="bottomIcons">
-								<CaretRightOutlined />
+								{playing ? (
+									<PauseOutlined onClick={() => onPlaying()} />
+								) : (
+									<CaretRightOutlined onClick={() => onPlaying()} />
+								)}
 							</div>
 						</Col>
 						<Col>
@@ -127,9 +133,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 									type="text"
 									className="bottomIcons"
 									style={{ color: ' #fff' }}
-								>
-									1X
-								</Button>
+								></Button>
 							</Dropdown>
 						</Col>
 						<Col>

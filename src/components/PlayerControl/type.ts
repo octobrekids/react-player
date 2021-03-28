@@ -7,4 +7,5 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onMute: () => void;
 	onVolumeChange: (value: number) => void;
 	onVolumeSeekDown: (value: number) => void;
+	onPlaybackRate: (value: number) => void;
 };
