@@ -18,7 +18,7 @@ const videoPlayerSlice = createSlice({
 			state.volume = action.payload.volume;
 			state.muted = action.payload.muted;
 		},
-		setPlaybackRate(state, action: PayloadAction<{ playbackRate: number }>) {
+		setPlaybackRate(state, action: PayloadAction<{ playbackRate: string }>) {
 			state.playbackRate = action.payload.playbackRate;
 		},
 	},

@@ -1,4 +1,4 @@
-import { Row, Col, Button, Slider, Dropdown, Menu } from 'antd';
+import { Row, Col, Button, Slider, Select } from 'antd';
 import React from 'react';
 import {
 	CaretRightOutlined,
@@ -23,17 +23,10 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		onVolumeSeekDown,
 		volume,
 		playbackRate,
-		onPlaybackRate,
+		onPlaybackRateChange,
 	} = props;
 
-	const menu = (
-		<Menu>
-			<Menu.Item>0.5</Menu.Item>
-			<Menu.Item>1</Menu.Item>
-			<Menu.Item>1.5</Menu.Item>
-			<Menu.Item>2</Menu.Item>
-		</Menu>
-	);
+	const { Option } = Select;
 
 	const TopControl = () => (
 		<Row justify="space-between" style={{ padding: 16 }}>
@@ -128,13 +121,19 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 				<Col span={4}>
 					<Row justify="space-around">
 						<Col>
-							<Dropdown overlay={menu}>
-								<Button
-									type="text"
-									className="bottomIcons"
-									style={{ color: ' #fff' }}
-								></Button>
-							</Dropdown>
+							<Select
+								defaultValue="1X"
+								bordered={false}
+								onChange={(value: string) => onPlaybackRateChange(value)}
+								value={playbackRate}
+								style={{ color: 'white' }}
+							>
+								{['2.0', '1.5', '1', '0.75', '0.5'].map((e, i) => (
+									<Option key={i} value={e}>
+										{e + 'X'}
+									</Option>
+								))}
+							</Select>
 						</Col>
 						<Col>
 							<div className="bottomIcons" style={{ paddingTop: '0.2rem' }}>

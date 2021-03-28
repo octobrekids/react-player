@@ -2,5 +2,5 @@ export type initVideoPlayerStateType = {
 	muted: boolean;
 	playing: boolean;
 	volume: number;
-	playbackRate: number;
+	playbackRate: string;
 };

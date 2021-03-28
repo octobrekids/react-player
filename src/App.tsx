@@ -5,7 +5,12 @@ import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoresState } from './stores';
-import { setMuted, setPlaying, setVolume } from './stores/videoReducer';
+import {
+	setMuted,
+	setPlaybackRate,
+	setPlaying,
+	setVolume,
+} from './stores/videoReducer';
 
 function App() {
 	const dispatch = useDispatch();
@@ -17,6 +22,9 @@ function App() {
 	);
 	const muted = useSelector((state: StoresState) => state.videoPlayer.muted);
 	const volume = useSelector((state: StoresState) => state.videoPlayer.volume);
+	const playbackRate = useSelector(
+		(state: StoresState) => state.videoPlayer.playbackRate
+	);
 
 	const handlePlaying = () => {
 		dispatch(setPlaying());
@@ -59,8 +67,8 @@ function App() {
 		);
 	};
 
-	const handlePlaybackRateChange = (value: number) => {
-		dispatch(setPlaybackRate);
+	const handlePlaybackRateChange = (value: string) => {
+		dispatch(setPlaybackRate({ playbackRate: value }));
 	};
 
 	return (
@@ -75,6 +83,7 @@ function App() {
 						muted={muted}
 						playing={playing}
 						volume={volume}
+						playbackRate={parseFloat(playbackRate)}
 					/>
 					<PlayerControl
 						muted={muted}
@@ -86,7 +95,8 @@ function App() {
 						onMute={handleMute}
 						onVolumeChange={handleVolumeChange}
 						onVolumeSeekDown={handleVolumeSeekDown}
-						onPlaybackRateChange={onPlaybackRateChange}
+						onPlaybackRateChange={handlePlaybackRateChange}
+						playbackRate={playbackRate}
 					/>
 				</div>
 			</Col>
