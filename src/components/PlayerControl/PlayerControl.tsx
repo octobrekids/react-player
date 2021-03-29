@@ -99,7 +99,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 								<Slider
 									min={0}
 									max={100}
-									value={volume * 100}
+									value={muted ? 0 : volume * 100}
 									onChange={onVolumeSeekDown}
 									onAfterChange={onVolumeChange}
 								/>
