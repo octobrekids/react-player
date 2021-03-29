@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initVideoPlayerState } from './init';
+import { ProgressState } from './type';
 
 const videoPlayerSlice = createSlice({
 	name: 'videoPlayer',
@@ -21,6 +22,9 @@ const videoPlayerSlice = createSlice({
 		setPlaybackRate(state, action: PayloadAction<{ playbackRate: string }>) {
 			state.playbackRate = action.payload.playbackRate;
 		},
+		setProgress(state, action: PayloadAction<{ changeState: ProgressState }>) {
+			state.changeState = action.payload.changeState;
+		},
 	},
 });
 
@@ -29,5 +33,6 @@ export const {
 	setPlaying,
 	setVolume,
 	setPlaybackRate,
+	setProgress,
 } = videoPlayerSlice.actions;
 export default videoPlayerSlice.reducer;
