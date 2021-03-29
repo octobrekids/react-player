@@ -15,12 +15,17 @@ import {
 	setVolumeSeekDown,
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
+import { PlayerControlPropsType } from './components/PlayerControl/type';
 
 function App() {
 	const dispatch = useDispatch();
 
 	const playerRef = useRef<ReactPlayer>(null);
 	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+	const controlsRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+	const canvasRef = useRef(null);
+
+	let count = 0;
 
 	const playing = useSelector(
 		(state: StoresState) => state.videoPlayer.playing
@@ -31,6 +36,9 @@ function App() {
 		(state: StoresState) => state.videoPlayer.playbackRate
 	);
 	const played = useSelector((state: StoresState) => state.videoPlayer.played);
+	const seeking = useSelector(
+		(state: StoresState) => state.videoPlayer.seeking
+	);
 
 	const handlePlaying = () => {
 		dispatch(setPlaying());
@@ -84,7 +92,16 @@ function App() {
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
-		dispatch(setProgress({ played: changeState.played }));
+		if (count > 3) {
+			controlsRef.current.style.visibility = 'hidden';
+			count = 0;
+		}
+		if (controlsRef.current.style.visibility === 'visible') {
+			count += 1;
+		}
+		if (!seeking) {
+			dispatch(setProgress({ played: changeState.played }));
+		}
 	};
 
 	return (
@@ -103,6 +120,7 @@ function App() {
 						onProgress={handleProgress}
 					/>
 					<PlayerControl
+						ref={controlsRef}
 						muted={muted}
 						volume={volume}
 						playing={playing}
