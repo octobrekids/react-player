@@ -6,7 +6,6 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onRewind: () => void;
 	onMute: () => void;
 	onVolumeChange: (value: number) => void;
-	onVolumeSeekDown: (value: number) => void;
 	onPlaybackRateChange: (value: string) => void;
 	onToggleFullScreen: () => void;
 };

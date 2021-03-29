@@ -20,7 +20,6 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		onRewind,
 		onMute,
 		onVolumeChange,
-		onVolumeSeekDown,
 		volume,
 		playbackRate,
 		onPlaybackRateChange,

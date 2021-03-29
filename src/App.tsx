@@ -60,15 +60,6 @@ function App() {
 		);
 	};
 
-	const handleVolumeSeekDown = (value: number) => {
-		dispatch(
-			setVolume({
-				volume: value / 100,
-				muted: value === 0 ? true : false,
-			})
-		);
-	};
-
 	const handlePlaybackRateChange = (value: string) => {
 		dispatch(setPlaybackRate({ playbackRate: value }));
 	};
@@ -102,7 +93,6 @@ function App() {
 						onPlaying={handlePlaying}
 						onMute={handleMute}
 						onVolumeChange={handleVolumeChange}
-						onVolumeSeekDown={handleVolumeSeekDown}
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
