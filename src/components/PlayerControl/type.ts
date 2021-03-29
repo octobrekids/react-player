@@ -1,9 +1,6 @@
 import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
 
-export type PlayerControlPropsType = Omit<
-	initVideoPlayerStateType,
-	'changeState' | 'seeking'
-> & {
+export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onPlaying: () => void;
 	onFastForward: () => void;
 	onRewind: () => void;
@@ -12,5 +9,4 @@ export type PlayerControlPropsType = Omit<
 	onPlaybackRateChange: (value: string) => void;
 	onToggleFullScreen: () => void;
 	onVolumeSeekDown: (value: number) => void;
-	played: number;
 };

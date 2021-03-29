@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 import { Row, Col } from 'antd';
 import ReactPlayer from 'react-player';
@@ -30,9 +30,7 @@ function App() {
 	const playbackRate = useSelector(
 		(state: StoresState) => state.videoPlayer.playbackRate
 	);
-	const played = useSelector(
-		(state: StoresState) => state.videoPlayer.changeState.played
-	);
+	const played = useSelector((state: StoresState) => state.videoPlayer.played);
 
 	const handlePlaying = () => {
 		dispatch(setPlaying());
@@ -86,7 +84,7 @@ function App() {
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
-		dispatch(setProgress({ changeState: changeState }));
+		dispatch(setProgress({ played: changeState.played }));
 	};
 
 	return (

@@ -29,8 +29,8 @@ const videoPlayerSlice = createSlice({
 		setPlaybackRate(state, action: PayloadAction<{ playbackRate: string }>) {
 			state.playbackRate = action.payload.playbackRate;
 		},
-		setProgress(state, action: PayloadAction<{ changeState: ProgressState }>) {
-			state.changeState = action.payload.changeState;
+		setProgress(state, action: PayloadAction<{ played: number }>) {
+			state.played = action.payload.played;
 		},
 	},
 });
