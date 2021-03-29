@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initVideoPlayerState } from './init';
-import { ProgressState } from './type';
 
 const videoPlayerSlice = createSlice({
 	name: 'videoPlayer',
