@@ -34,8 +34,6 @@ function App() {
 		(state: StoresState) => state.videoPlayer.changeState.played
 	);
 
-	const [volumeOnChange, setVolumeOnChange] = useState(50);
-
 	const handlePlaying = () => {
 		dispatch(setPlaying());
 	};
@@ -60,11 +58,10 @@ function App() {
 	};
 
 	const handleVolumeChange = (value: number) => {
-		setVolumeOnChange(value);
 		dispatch(
 			setVolume({
-				volume: volumeOnChange / 100,
-				muted: volumeOnChange === 0 ? true : false,
+				volume: value / 100,
+				muted: value === 0 ? true : false,
 			})
 		);
 	};
@@ -73,7 +70,7 @@ function App() {
 		dispatch(
 			setVolumeSeekDown({
 				seeking: false,
-				volume: volumeOnChange / 100,
+				volume: value / 100,
 			})
 		);
 	};
@@ -120,7 +117,6 @@ function App() {
 						playbackRate={playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
 						onVolumeSeekDown={handleVolumeSeekDown}
-						volumeOnChange={volumeOnChange}
 						played={played}
 					/>
 				</div>

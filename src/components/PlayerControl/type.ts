@@ -12,6 +12,5 @@ export type PlayerControlPropsType = Omit<
 	onPlaybackRateChange: (value: string) => void;
 	onToggleFullScreen: () => void;
 	onVolumeSeekDown: (value: number) => void;
-	volumeOnChange: number;
 	played: number;
 };
