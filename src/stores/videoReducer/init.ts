@@ -4,6 +4,7 @@ export const initVideoPlayerState: initVideoPlayerStateType = {
 	muted: false,
 	playing: false,
 	volume: 50,
+	seeking: false,
 	playbackRate: '1',
 	changeState: {
 		loaded: 0,

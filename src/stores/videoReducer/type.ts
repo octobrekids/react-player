@@ -4,6 +4,7 @@ export type initVideoPlayerStateType = {
 	volume: number;
 	playbackRate: string;
 	changeState: ProgressState;
+	seeking: boolean;
 };
 
 export type ProgressState = {

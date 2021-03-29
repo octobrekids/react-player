@@ -19,6 +19,13 @@ const videoPlayerSlice = createSlice({
 			state.volume = action.payload.volume;
 			state.muted = action.payload.muted;
 		},
+		setVolumeSeekDown(
+			state,
+			action: PayloadAction<{ seeking: boolean; volume: number }>
+		) {
+			state.seeking = action.payload.seeking;
+			state.volume = action.payload.volume;
+		},
 		setPlaybackRate(state, action: PayloadAction<{ playbackRate: string }>) {
 			state.playbackRate = action.payload.playbackRate;
 		},
@@ -34,5 +41,6 @@ export const {
 	setVolume,
 	setPlaybackRate,
 	setProgress,
+	setVolumeSeekDown,
 } = videoPlayerSlice.actions;
 export default videoPlayerSlice.reducer;

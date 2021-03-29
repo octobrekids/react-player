@@ -69,7 +69,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		<div style={{ padding: '1rem' }}>
 			<Row justify="space-between" gutter={[0, 0]}>
 				<Col span={24}>
-					<Slider value={played * 100} />
+					<Slider min={0} max={100} value={played * 100} />
 				</Col>
 			</Row>
 

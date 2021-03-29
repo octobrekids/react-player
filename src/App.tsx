@@ -12,6 +12,7 @@ import {
 	setPlaying,
 	setProgress,
 	setVolume,
+	setVolumeSeekDown,
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 
@@ -69,7 +70,12 @@ function App() {
 	};
 
 	const handleVolumeSeekDown = (value: number) => {
-		setVolumeOnChange(value);
+		dispatch(
+			setVolumeSeekDown({
+				seeking: false,
+				volume: volumeOnChange / 100,
+			})
+		);
 	};
 
 	const handlePlaybackRateChange = (value: string) => {

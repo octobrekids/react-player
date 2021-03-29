@@ -2,7 +2,7 @@ import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
 
 export type PlayerControlPropsType = Omit<
 	initVideoPlayerStateType,
-	'changeState'
+	'changeState' | 'seeking'
 > & {
 	onPlaying: () => void;
 	onFastForward: () => void;
