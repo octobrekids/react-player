@@ -24,6 +24,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		volume,
 		playbackRate,
 		onPlaybackRateChange,
+		onToggleFullScreen,
 	} = props;
 
 	const { Option } = Select;
@@ -98,7 +99,6 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 									min={0}
 									max={100}
 									value={muted ? 0 : volume * 100}
-									onAfterChange={(value: number) => onVolumeSeekDown(value)}
 									onChange={(value: number) => onVolumeChange(value)}
 								/>
 							</div>
@@ -137,7 +137,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 						</Col>
 						<Col>
 							<div className="bottomIcons" style={{ paddingTop: '0.2rem' }}>
-								<ExpandOutlined />
+								<ExpandOutlined onClick={() => onToggleFullScreen()} />
 							</div>
 						</Col>
 					</Row>

@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoresState } from './stores';
+import screenful from 'screenfull';
 import {
 	setMuted,
 	setPlaybackRate,
@@ -16,6 +17,7 @@ function App() {
 	const dispatch = useDispatch();
 
 	const playerRef = useRef<ReactPlayer>(null);
+	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
 	const playing = useSelector(
 		(state: StoresState) => state.videoPlayer.playing
@@ -71,10 +73,16 @@ function App() {
 		dispatch(setPlaybackRate({ playbackRate: value }));
 	};
 
+	const handleToggleFullScreen = () => {
+		if (screenful.isEnabled) {
+			screenful.toggle(playerContainerRef.current);
+		}
+	};
+
 	return (
 		<Row justify="center">
 			<Col span={10}>
-				<div className="playerWrapper">
+				<div ref={playerContainerRef} className="playerWrapper">
 					<ReactPlayer
 						url="https://www.youtube.com/watch?v=gdZLi9oWNZg"
 						ref={playerRef}
@@ -97,6 +105,7 @@ function App() {
 						onVolumeSeekDown={handleVolumeSeekDown}
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={playbackRate}
+						onToggleFullScreen={handleToggleFullScreen}
 					/>
 				</div>
 			</Col>
