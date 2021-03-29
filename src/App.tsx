@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 import { Row, Col } from 'antd';
 import ReactPlayer from 'react-player';
@@ -10,8 +10,10 @@ import {
 	setMuted,
 	setPlaybackRate,
 	setPlaying,
+	setProgress,
 	setVolume,
 } from './stores/videoReducer';
+import { ProgressState } from './stores/videoReducer/type';
 
 function App() {
 	const dispatch = useDispatch();
@@ -27,6 +29,11 @@ function App() {
 	const playbackRate = useSelector(
 		(state: StoresState) => state.videoPlayer.playbackRate
 	);
+	const played = useSelector(
+		(state: StoresState) => state.videoPlayer.changeState.played
+	);
+
+	const [volumeOnChange, setVolumeOnChange] = useState(50);
 
 	const handlePlaying = () => {
 		dispatch(setPlaying());
@@ -52,12 +59,17 @@ function App() {
 	};
 
 	const handleVolumeChange = (value: number) => {
+		setVolumeOnChange(value);
 		dispatch(
 			setVolume({
-				volume: value / 100,
-				muted: value === 0 ? true : false,
+				volume: volumeOnChange / 100,
+				muted: volumeOnChange === 0 ? true : false,
 			})
 		);
+	};
+
+	const handleVolumeSeekDown = (value: number) => {
+		setVolumeOnChange(value);
 	};
 
 	const handlePlaybackRateChange = (value: string) => {
@@ -70,12 +82,16 @@ function App() {
 		}
 	};
 
+	const handleProgress = (changeState: ProgressState) => {
+		dispatch(setProgress({ changeState: changeState }));
+	};
+
 	return (
 		<Row justify="center">
 			<Col span={10}>
 				<div ref={playerContainerRef} className="playerWrapper">
 					<ReactPlayer
-						url="https://www.youtube.com/watch?v=gdZLi9oWNZg"
+						url="https://www.youtube.com/watch?v=vEd1rLfrOe4s"
 						ref={playerRef}
 						width="100%"
 						height="100%"
@@ -83,6 +99,7 @@ function App() {
 						playing={playing}
 						volume={volume}
 						playbackRate={parseFloat(playbackRate)}
+						onProgress={handleProgress}
 					/>
 					<PlayerControl
 						muted={muted}
@@ -96,6 +113,9 @@ function App() {
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
+						onVolumeSeekDown={handleVolumeSeekDown}
+						volumeOnChange={volumeOnChange}
+						played={played}
 					/>
 				</div>
 			</Col>

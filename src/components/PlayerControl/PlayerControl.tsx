@@ -23,7 +23,9 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		volume,
 		playbackRate,
 		onPlaybackRateChange,
+		onVolumeSeekDown,
 		onToggleFullScreen,
+		played,
 	} = props;
 
 	const { Option } = Select;
@@ -67,7 +69,7 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 		<div style={{ padding: '1rem' }}>
 			<Row justify="space-between" gutter={[0, 0]}>
 				<Col span={24}>
-					<Slider defaultValue={30} />
+					<Slider value={played * 100} />
 				</Col>
 			</Row>
 
@@ -97,8 +99,9 @@ const PlayerControl: React.FC<PlayerControlPropsType> = (props) => {
 								<Slider
 									min={0}
 									max={100}
-									value={muted ? 0 : volume * 100}
-									onChange={(value: number) => onVolumeChange(value)}
+									value={volume * 100}
+									onChange={onVolumeSeekDown}
+									onAfterChange={onVolumeChange}
 								/>
 							</div>
 						</Col>
