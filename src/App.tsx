@@ -21,8 +21,8 @@ import {
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
-import { MarkersType } from './components/Marker/type';
-import { markers } from './mocks/markers';
+import { MarkerType } from './components/Marker/type';
+//import { markers } from './mocks/markers';
 
 type BookmarkType = {
 	time: number;
@@ -39,6 +39,7 @@ function App() {
 
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
 	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
+	const [markers, setMarkers] = useState<MarkerType[]>([]);
 
 	const format = (seconds: number): string => {
 		if (isNaN(seconds)) {
@@ -55,6 +56,7 @@ function App() {
 	};
 
 	let count = 0;
+	let id = 0;
 
 	const playing = useSelector(
 		(state: StoresState) => state.videoPlayer.playing
@@ -193,6 +195,16 @@ function App() {
 				display: format(playerRef.current.getCurrentTime()),
 				image: dataUri,
 			});
+
+			const markersCopy: MarkerType[] = [...markers];
+			markersCopy.push({
+				id: id,
+				time: playerRef.current.getCurrentTime(),
+				color: '#ffc837',
+				title: 'bunny',
+			});
+			id++;
+			setMarkers(markersCopy);
 			setBookmarks(bookmarksCopy);
 		}
 	};
@@ -210,8 +222,9 @@ function App() {
 
 	const totalDuration = format(duration);
 
-	const handleMarkerClick = (marker: MarkersType) => {
+	const handleMarkerClick = (marker: MarkerType) => {
 		playerRef.current?.seekTo(marker.time);
+		alert('marker clicked!');
 	};
 
 	return (
@@ -265,6 +278,7 @@ function App() {
 						onBookmark={addBookmark}
 						markers={markers}
 						onMarkerClick={handleMarkerClick}
+						duration={duration}
 					/>
 				</div>
 				<Row style={{ marginTop: 20 }} justify="space-around">

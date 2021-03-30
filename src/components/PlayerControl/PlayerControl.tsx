@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import { PlayerControlPropsType } from './type';
 import Slider from '../Slider';
+import Marker from '../Marker';
 
 const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 	(props, ref) => {
@@ -34,6 +35,9 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			elapsedTime,
 			totalDuration,
 			onBookmark,
+			markers,
+			onMarkerClick,
+			duration,
 		} = props;
 
 		const { Option } = Select;
@@ -84,6 +88,17 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 							onMouseDownSlider={() => onVideoSliderMouseDown()}
 							onMouseUpSlider={(e: any) => onVideoSliderMouseUp(e)}
 						/>
+						{markers &&
+							markers.map((marker, index) => {
+								return (
+									<Marker
+										key={index}
+										marker={marker}
+										duration={duration}
+										onMarkerClick={onMarkerClick}
+									/>
+								);
+							})}
 					</Col>
 				</Row>
 

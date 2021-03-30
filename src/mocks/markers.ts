@@ -1,6 +1,6 @@
-import { MarkersType } from '../components/Marker/type';
+import { MarkerType } from '../components/Marker/type';
 
-export const markers: MarkersType[] = [
+export const markers: MarkerType[] = [
 	{
 		id: 1,
 		time: 5,
