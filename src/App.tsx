@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 import { Row, Col } from 'antd';
 import ReactPlayer from 'react-player';
@@ -16,12 +16,13 @@ import {
 	setVideoSliderMouseUp,
 	setVolume,
 	setVolumeSeekDown,
+	setVolumeSliderMouseDown,
+	setVolumeSliderMouseUp,
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 
 function App() {
 	const dispatch = useDispatch();
-
 	const playerRef = useRef<ReactPlayer>(null);
 	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 	const controlsRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -74,6 +75,11 @@ function App() {
 				volume: parseFloat(e.target.value) / 100,
 			})
 		);
+		dispatch(setVolumeSliderMouseUp({ seeking: false }));
+	};
+
+	const handleVolumeSliderMouseDown = () => {
+		dispatch(setVolumeSliderMouseDown({ seeking: true }));
 	};
 
 	const handlePlaybackRateChange = (value: string) => {
@@ -149,6 +155,7 @@ function App() {
 						onVideoSliderChange={handleVideoSliderChange}
 						onVideoSliderMouseUp={handleVideoSliderMouseUp}
 						onVideoSliderMouseDown={handleVideoSliderMouseDown}
+						onVolumeSliderMouseDown={handleVolumeSliderMouseDown}
 					/>
 				</div>
 			</Col>

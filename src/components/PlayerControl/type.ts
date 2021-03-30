@@ -12,4 +12,5 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onVideoSliderChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderMouseUp: React.MouseEventHandler<HTMLInputElement>;
 	onVideoSliderMouseDown: () => void;
+	onVolumeSliderMouseDown: () => void;
 };
