@@ -118,17 +118,19 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 									/>
 								</div>
 							</Col>
-							<Col>
+							<Col span={8}>
 								<Button
 									type="text"
 									style={{
-										paddingLeft: '0rem',
-										marginLeft: '0rem',
+										padding: '0rem',
+										margin: '0rem',
 										color: ' #fff',
+										background: 'none',
+										border: 'none',
 									}}
 									onClick={() => onChangeDisplayFormat()}
 								>
-									{elapsedTime}/{totalDuration}
+									{elapsedTime} / {totalDuration}
 								</Button>
 							</Col>
 						</Row>
