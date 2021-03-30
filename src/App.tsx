@@ -263,7 +263,7 @@ function App() {
 					{bookmarks.map((bookmark, index) => (
 						<Col>
 							<Card
-								key={index}
+								key={Math.random()}
 								onClick={() => playerRef.current?.seekTo(bookmark.time)}
 							>
 								<img crossOrigin="anonymous" src={bookmark.image} alt="" />
