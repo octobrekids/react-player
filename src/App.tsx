@@ -123,10 +123,25 @@ function App() {
 		}
 	};
 
+	const handleMouseMove = () => {
+		controlsRef.current.style.visibility = 'visible';
+		count = 0;
+	};
+
+	const handleMouseLeave = () => {
+		controlsRef.current.style.visibility = 'hidden';
+		count = 0;
+	};
+
 	return (
 		<Row justify="center">
 			<Col span={10}>
-				<div ref={playerContainerRef} className="playerWrapper">
+				<div
+					ref={playerContainerRef}
+					className="playerWrapper"
+					onMouseMove={() => handleMouseMove()}
+					onMouseLeave={() => handleMouseLeave()}
+				>
 					<ReactPlayer
 						url="https://www.youtube.com/watch?v=RSf8QcJkGuk"
 						ref={playerRef}
