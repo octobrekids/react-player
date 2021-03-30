@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 import { Row, Col } from 'antd';
 import ReactPlayer from 'react-player';
@@ -27,6 +27,22 @@ function App() {
 	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 	const controlsRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 	const canvasRef = useRef(null);
+
+	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
+
+	const format = (seconds: number): string => {
+		if (isNaN(seconds)) {
+			return `00:00`;
+		}
+		const date = new Date(seconds * 1000);
+		const hh = date.getUTCHours();
+		const mm = date.getUTCMinutes();
+		const ss = date.getUTCSeconds().toString().padStart(2, '0');
+		if (hh) {
+			return `${hh}:${mm.toString().padStart(2, '0')}:${ss}`;
+		}
+		return `${mm}:${ss}`;
+	};
 
 	let count = 0;
 
@@ -133,6 +149,25 @@ function App() {
 		count = 0;
 	};
 
+	const handleDisplayFormat = () => {
+		setTimeDisplayFormat(
+			timeDisplayFormat === 'normal' ? 'remaining' : 'normal'
+		);
+	};
+
+	const currentTime =
+		playerRef && playerRef.current ? playerRef.current.getCurrentTime() : 0;
+
+	const duration =
+		playerRef && playerRef.current ? playerRef.current.getDuration() : 0;
+
+	const elapsedTime =
+		timeDisplayFormat === 'normal'
+			? format(currentTime)
+			: `-${format(duration - currentTime)}`;
+
+	const totalDuration = format(duration);
+
 	return (
 		<Row justify="center">
 			<Col span={10}>
@@ -171,6 +206,9 @@ function App() {
 						onVideoSliderMouseUp={handleVideoSliderMouseUp}
 						onVideoSliderMouseDown={handleVideoSliderMouseDown}
 						onVolumeSliderMouseDown={handleVolumeSliderMouseDown}
+						onChangeDisplayFormat={handleDisplayFormat}
+						elapsedTime={elapsedTime}
+						totalDuration={totalDuration}
 					/>
 				</div>
 			</Col>

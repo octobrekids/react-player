@@ -30,6 +30,9 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onPlaybackRateChange,
 			onToggleFullScreen,
 			played,
+			onChangeDisplayFormat,
+			elapsedTime,
+			totalDuration,
 		} = props;
 
 		const { Option } = Select;
@@ -123,8 +126,9 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 										marginLeft: '0rem',
 										color: ' #fff',
 									}}
+									onClick={() => onChangeDisplayFormat()}
 								>
-									05:05
+									{elapsedTime}/{totalDuration}
 								</Button>
 							</Col>
 						</Row>
