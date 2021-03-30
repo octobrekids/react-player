@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 import { Row, Col } from 'antd';
 import ReactPlayer from 'react-player';
@@ -15,7 +15,6 @@ import {
 	setVolumeSeekDown,
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
-import { PlayerControlPropsType } from './components/PlayerControl/type';
 
 function App() {
 	const dispatch = useDispatch();
@@ -63,20 +62,13 @@ function App() {
 		}
 	};
 
-	const handleVolumeChange = (value: number) => {
-		dispatch(
-			setVolume({
-				volume: value / 100,
-				muted: value === 0 ? true : false,
-			})
-		);
-	};
-
-	const handleVolumeSeekDown = (value: number) => {
+	const handleVolumeSliderMouseUp = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		dispatch(
 			setVolumeSeekDown({
 				seeking: false,
-				volume: value / 100,
+				volume: parseFloat(e.target.value) / 100,
 			})
 		);
 	};
@@ -89,6 +81,25 @@ function App() {
 		if (screenful.isEnabled) {
 			screenful.toggle(playerContainerRef.current);
 		}
+	};
+
+	const handleVideoSliderMouseUp = () => {
+		setVideoState((prevState) => ({
+			...prevState,
+			isSeeking: false,
+		}));
+	};
+
+	const handleVideoSliderMouseDown = () => {
+		setVideoState((prevState) => ({
+			...prevState,
+			isPlaying: false,
+			isSeeking: true,
+		}));
+	};
+
+	const handleVideoSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const played = e.target.value;
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
@@ -109,7 +120,7 @@ function App() {
 			<Col span={10}>
 				<div ref={playerContainerRef} className="playerWrapper">
 					<ReactPlayer
-						url="https://www.youtube.com/watch?v=vEd1rLfrOe4s"
+						url="https://www.youtube.com/watch?v=pIrOAyXIjak"
 						ref={playerRef}
 						width="100%"
 						height="100%"
@@ -128,12 +139,14 @@ function App() {
 						onFastForward={handleFastForward}
 						onPlaying={handlePlaying}
 						onMute={handleMute}
-						onVolumeChange={handleVolumeChange}
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
-						onVolumeSeekDown={handleVolumeSeekDown}
+						onVolumeSliderMouseUp={handleVolumeSliderMouseUp}
 						played={played}
+						onVideoSliderChange={handleVideoSliderChange}
+						onVideoSliderMouseUp={handleVideoSliderMouseUp}
+						onVideoSliderMouseDown={handleVideoSliderMouseDown}
 					/>
 				</div>
 			</Col>

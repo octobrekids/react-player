@@ -1,4 +1,4 @@
-import { Row, Col, Button, Slider, Select } from 'antd';
+import { Row, Col, Button, Select } from 'antd';
 import React, { forwardRef } from 'react';
 import {
 	CaretRightOutlined,
@@ -10,6 +10,7 @@ import {
 	NotificationOutlined,
 } from '@ant-design/icons';
 import { PlayerControlPropsType } from './type';
+import Slider from '../Slider';
 
 const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 	(props, ref) => {
@@ -20,11 +21,12 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onFastForward,
 			onRewind,
 			onMute,
-			onVolumeChange,
+			onVolumeSliderMouseUp,
+
 			volume,
 			playbackRate,
+
 			onPlaybackRateChange,
-			onVolumeSeekDown,
 			onToggleFullScreen,
 			played,
 		} = props;
@@ -70,7 +72,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			<div style={{ padding: '1rem' }}>
 				<Row justify="space-between" gutter={[0, 0]}>
 					<Col span={24}>
-						<Slider min={0} max={100} value={played * 100} />
+						<Slider min={0} max={100} played={played * 100} />
 					</Col>
 				</Row>
 
@@ -100,9 +102,8 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 									<Slider
 										min={0}
 										max={100}
-										value={muted ? 0 : volume * 100}
-										onChange={onVolumeSeekDown}
-										onAfterChange={onVolumeChange}
+										played={muted ? 0 : volume * 100}
+										onMouseUpSlider={(e: any) => onVolumeSliderMouseUp(e)}
 									/>
 								</div>
 							</Col>
