@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './App.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Card } from 'antd';
 import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +29,7 @@ function App() {
 	const canvasRef = useRef(null);
 
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
+	const [bookmarks, setBookmarks] = useState([]);
 
 	const format = (seconds: number): string => {
 		if (isNaN(seconds)) {
@@ -155,6 +156,8 @@ function App() {
 		);
 	};
 
+	const addBookmark = 
+
 	const currentTime =
 		playerRef && playerRef.current ? playerRef.current.getCurrentTime() : 0;
 
@@ -167,6 +170,8 @@ function App() {
 			: `-${format(duration - currentTime)}`;
 
 	const totalDuration = format(duration);
+
+	
 
 	return (
 		<Row justify="center">
@@ -209,8 +214,19 @@ function App() {
 						onChangeDisplayFormat={handleDisplayFormat}
 						elapsedTime={elapsedTime}
 						totalDuration={totalDuration}
+						onBookmark={addBookmark}
 					/>
 				</div>
+				<Row style={{ marginTop: 20 }}>
+					{bookmarks.map((bookmark, index) => (
+						<Col>
+							<Card key={index}>
+								<img crossOrigin="anonymous" src="" />
+								<p>Bookmark at 00:00</p>
+							</Card>
+						</Col>
+					))}
+				</Row>
 			</Col>
 		</Row>
 	);
