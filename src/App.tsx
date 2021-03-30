@@ -11,6 +11,9 @@ import {
 	setPlaybackRate,
 	setPlaying,
 	setProgress,
+	setVideoSliderChange,
+	setVideoSliderMouseDown,
+	setVideoSliderMouseUp,
 	setVolume,
 	setVolumeSeekDown,
 } from './stores/videoReducer';
@@ -83,23 +86,22 @@ function App() {
 		}
 	};
 
-	const handleVideoSliderMouseUp = () => {
-		setVideoState((prevState) => ({
-			...prevState,
-			isSeeking: false,
-		}));
+	const handleVideoSliderMouseUp = (e: any) => {
+		const played = parseFloat(e.target.value);
+		dispatch(setVideoSliderChange({ played: played / 100 }));
+		if (playerRef.current) {
+			playerRef.current.seekTo(played / 100, 'fraction');
+		}
+		dispatch(setVideoSliderMouseUp({ seeking: false }));
 	};
 
 	const handleVideoSliderMouseDown = () => {
-		setVideoState((prevState) => ({
-			...prevState,
-			isPlaying: false,
-			isSeeking: true,
-		}));
+		dispatch(setVideoSliderMouseDown({ seeking: true }));
 	};
 
 	const handleVideoSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const played = e.target.value;
+		const played = parseFloat(e.target.value);
+		dispatch(setVideoSliderChange({ played: played / 100 }));
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
@@ -120,7 +122,7 @@ function App() {
 			<Col span={10}>
 				<div ref={playerContainerRef} className="playerWrapper">
 					<ReactPlayer
-						url="https://www.youtube.com/watch?v=pIrOAyXIjak"
+						url="https://www.youtube.com/watch?v=RSf8QcJkGuk"
 						ref={playerRef}
 						width="100%"
 						height="100%"

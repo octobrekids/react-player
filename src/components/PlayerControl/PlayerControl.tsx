@@ -22,10 +22,11 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onRewind,
 			onMute,
 			onVolumeSliderMouseUp,
-
+			onVideoSliderChange,
+			onVideoSliderMouseUp,
+			onVideoSliderMouseDown,
 			volume,
 			playbackRate,
-
 			onPlaybackRateChange,
 			onToggleFullScreen,
 			played,
@@ -72,7 +73,14 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			<div style={{ padding: '1rem' }}>
 				<Row justify="space-between" gutter={[0, 0]}>
 					<Col span={24}>
-						<Slider min={0} max={100} played={played * 100} />
+						<Slider
+							min={0}
+							max={100}
+							played={played * 100}
+							onMouseDownSlider={() => onVideoSliderMouseDown()}
+							onMouseUpSlider={(e: any) => onVideoSliderMouseUp(e)}
+							//onChangeSlider={(e: any) => onVideoSliderChange(e)}
+						/>
 					</Col>
 				</Row>
 

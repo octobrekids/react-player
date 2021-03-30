@@ -31,6 +31,18 @@ const videoPlayerSlice = createSlice({
 		setProgress(state, action: PayloadAction<{ played: number }>) {
 			state.played = action.payload.played;
 		},
+		setVideoSliderMouseUp(state, action: PayloadAction<{ seeking: boolean }>) {
+			state.seeking = action.payload.seeking;
+		},
+		setVideoSliderMouseDown(
+			state,
+			action: PayloadAction<{ seeking: boolean }>
+		) {
+			state.seeking = action.payload.seeking;
+		},
+		setVideoSliderChange(state, action: PayloadAction<{ played: number }>) {
+			state.played = action.payload.played;
+		},
 	},
 });
 
@@ -41,5 +53,8 @@ export const {
 	setPlaybackRate,
 	setProgress,
 	setVolumeSeekDown,
+	setVideoSliderMouseUp,
+	setVideoSliderMouseDown,
+	setVideoSliderChange,
 } = videoPlayerSlice.actions;
 export default videoPlayerSlice.reducer;

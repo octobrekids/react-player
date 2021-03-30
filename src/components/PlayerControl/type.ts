@@ -10,6 +10,6 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onToggleFullScreen: () => void;
 	onVolumeSliderMouseUp: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	onVideoSliderMouseUp: () => void;
+	onVideoSliderMouseUp: React.MouseEventHandler<HTMLInputElement>;
 	onVideoSliderMouseDown: () => void;
 };
