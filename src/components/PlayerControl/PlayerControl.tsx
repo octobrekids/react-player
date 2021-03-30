@@ -33,6 +33,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onChangeDisplayFormat,
 			elapsedTime,
 			totalDuration,
+			onBookmark,
 		} = props;
 
 		const { Option } = Select;
@@ -43,7 +44,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 					<h4 style={{ color: 'white' }}>Video Title</h4>
 				</Col>
 				<Col>
-					<Button>Bookmark</Button>
+					<Button onClick={() => onBookmark()}>Bookmark</Button>
 				</Col>
 			</Row>
 		);

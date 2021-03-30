@@ -21,15 +21,21 @@ import {
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 
+type BookmarkType = {
+	time: number;
+	display: string;
+	image: string;
+}[];
+
 function App() {
 	const dispatch = useDispatch();
 	const playerRef = useRef<ReactPlayer>(null);
 	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 	const controlsRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-	const canvasRef = useRef(null);
+	const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
-	const [bookmarks, setBookmarks] = useState([]);
+	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
 
 	const format = (seconds: number): string => {
 		if (isNaN(seconds)) {
@@ -156,7 +162,33 @@ function App() {
 		);
 	};
 
-	const addBookmark = 
+	const addBookmark = () => {
+		// const canvas = canvasRef.current;
+		// if (canvas && playerRef.current) {
+		// 	canvas.width = 160;
+		// 	canvas.height = 90;
+
+		// 	const ctx = canvas.getContext('2d');
+
+		// 	if (ctx) {
+		// 		const image = playerRef.current.getSnapshotBeforeUpdate;
+		// 		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+		// 	}
+
+		// 	const dataUri = canvas.toDataURL();
+		// 	canvas.width = 0;
+		// 	canvas.height = 0;
+
+		// 	const bookmarksCopy: BookmarkType = [...bookmarks];
+		// 	bookmarksCopy.push({
+		// 		time: playerRef.current.getCurrentTime(),
+		// 		display: format(playerRef.current.getCurrentTime()),
+		// 		image: dataUri,
+		// 	});
+		// 	setBookmarks(bookmarksCopy);
+		// }
+		console.log('addBookmark');
+	};
 
 	const currentTime =
 		playerRef && playerRef.current ? playerRef.current.getCurrentTime() : 0;
@@ -170,8 +202,6 @@ function App() {
 			: `-${format(duration - currentTime)}`;
 
 	const totalDuration = format(duration);
-
-	
 
 	return (
 		<Row justify="center">
@@ -221,12 +251,13 @@ function App() {
 					{bookmarks.map((bookmark, index) => (
 						<Col>
 							<Card key={index}>
-								<img crossOrigin="anonymous" src="" />
+								<img crossOrigin="anonymous" src="" alt="" />
 								<p>Bookmark at 00:00</p>
 							</Card>
 						</Col>
 					))}
 				</Row>
+				<canvas ref={canvasRef} />
 			</Col>
 		</Row>
 	);

@@ -16,4 +16,5 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onChangeDisplayFormat: () => void;
 	elapsedTime: string;
 	totalDuration: string;
+	onBookmark: () => void;
 };
