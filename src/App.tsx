@@ -21,6 +21,8 @@ import {
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
+import { MarkersType } from './components/Marker/type';
+import { markers } from './mocks/markers';
 
 type BookmarkType = {
 	time: number;
@@ -31,7 +33,7 @@ type BookmarkType = {
 function App() {
 	const dispatch = useDispatch();
 	const playerRef = useRef<ReactPlayer>(null);
-	const playerContainerRef = useRef<any>(null);
+	const playerContainerRef = useRef<HTMLDivElement>(null);
 	const controlsRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -208,9 +210,13 @@ function App() {
 
 	const totalDuration = format(duration);
 
+	const handleMarkerClick = (marker: MarkersType) => {
+		playerRef.current?.seekTo(marker.time);
+	};
+
 	return (
 		<Row justify="center">
-			<Col span={10}>
+			<Col span={18}>
 				<div
 					ref={playerContainerRef}
 					className="playerWrapper"
@@ -257,11 +263,13 @@ function App() {
 						elapsedTime={elapsedTime}
 						totalDuration={totalDuration}
 						onBookmark={addBookmark}
+						markers={markers}
+						onMarkerClick={handleMarkerClick}
 					/>
 				</div>
-				<Row style={{ marginTop: 20 }}>
-					{bookmarks.map((bookmark, index) => (
-						<Col>
+				<Row style={{ marginTop: 20 }} justify="space-around">
+					{bookmarks.map((bookmark) => (
+						<Col span={4} style={{ marginLeft: 20, marginTop: 20 }}>
 							<Card
 								key={Math.random()}
 								onClick={() => playerRef.current?.seekTo(bookmark.time)}

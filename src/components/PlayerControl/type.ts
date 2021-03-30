@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
+import { MarkersType } from '../Marker/type';
 
 export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onPlaying: () => void;
@@ -17,4 +18,6 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	elapsedTime: string;
 	totalDuration: string;
 	onBookmark: () => void;
+	onMarkerClick?: (marker: MarkersType) => void;
+	markers?: MarkersType[];
 };
