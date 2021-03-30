@@ -52,6 +52,9 @@ const videoPlayerSlice = createSlice({
 		setVideoSliderChange(state, action: PayloadAction<{ played: number }>) {
 			state.played = action.payload.played;
 		},
+		setDuration(state, action: PayloadAction<{ duration: number }>) {
+			state.duration = action.payload.duration;
+		},
 	},
 });
 
@@ -67,5 +70,6 @@ export const {
 	setVideoSliderChange,
 	setVolumeSliderMouseUp,
 	setVolumeSliderMouseDown,
+	setDuration,
 } = videoPlayerSlice.actions;
 export default videoPlayerSlice.reducer;
