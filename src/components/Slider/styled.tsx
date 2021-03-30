@@ -4,52 +4,59 @@ export const PlayerSliderWrapper = styled.div`
 	position: relative;
 
 	input[type='range'] {
+		overflow: hidden;
+		width: 80px;
 		-webkit-appearance: none;
+		background-color: #9a905d;
 		width: 100%;
-		height: 0.5rem;
-		border-radius: 5px;
-		background: #d3d3d3;
-		outline: none;
-		opacity: 0.7;
 		-webkit-transition: 0.2s;
 		transition: opacity 0.2s;
+		height: 0.5rem;
+		outline: none;
+		opacity: 0.7;
 	}
 
-	input::-webkit-slider-thumb {
+	input[type='range']::-webkit-slider-runnable-track {
+		height: 1em;
 		-webkit-appearance: none;
-		appearance: none;
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		background: #000;
+		color: #13bba4;
+		margin-top: -1px;
+	}
+
+	input[type='range']::-webkit-slider-thumb {
+		width: 0.75em;
+		-webkit-appearance: none;
+		height: 1em;
+		cursor: ew-resize;
+		background: #434343;
+		box-shadow: -100rem 0 0 100rem #43e5f7;
+	}
+
+	input[type='range']::-moz-range-thumb {
+		width: 0.75em;
+		-webkit-appearance: none;
+		height: 1em;
+		cursor: ew-resize;
+		background: #434343;
+		box-shadow: -100rem 0 0 100rem #43e5f7;
 		cursor: pointer;
 	}
 
-	input::-moz-range-thumb {
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		background: #000;
-		cursor: pointer;
-	}
-
-	input:hover {
+	input[type='range']:hover {
 		opacity: 1;
 	}
-
+	/* FF */
 	input[type='range']::-moz-range-progress {
-		background-color: #d3d3d3;
+		background-color: #43e5f7;
 	}
-
 	input[type='range']::-moz-range-track {
-		background-color: #000;
+		background-color: #9a905d;
 	}
-
+	/* IE */
 	input[type='range']::-ms-fill-lower {
-		background-color: #d3d3d3;
+		background-color: #43e5f7;
 	}
-
 	input[type='range']::-ms-fill-upper {
-		background-color: #000;
+		background-color: #9a905d;
 	}
 `;
