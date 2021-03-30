@@ -20,6 +20,7 @@ import {
 	setVolumeSliderMouseUp,
 } from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
+import { captureVideoFrame } from './utils/captureVideoFrame';
 
 type BookmarkType = {
 	time: number;
@@ -30,9 +31,9 @@ type BookmarkType = {
 function App() {
 	const dispatch = useDispatch();
 	const playerRef = useRef<ReactPlayer>(null);
-	const playerContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-	const controlsRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-	const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
+	const playerContainerRef = useRef<any>(null);
+	const controlsRef = useRef<HTMLDivElement>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
 	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
@@ -110,7 +111,7 @@ function App() {
 	};
 
 	const handleToggleFullScreen = () => {
-		if (screenful.isEnabled) {
+		if (screenful.isEnabled && playerContainerRef.current) {
 			screenful.toggle(playerContainerRef.current);
 		}
 	};
@@ -134,11 +135,14 @@ function App() {
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
-		if (count > 3) {
+		if (count > 3 && controlsRef.current) {
 			controlsRef.current.style.visibility = 'hidden';
 			count = 0;
 		}
-		if (controlsRef.current.style.visibility === 'visible') {
+		if (
+			controlsRef.current &&
+			controlsRef.current.style.visibility === 'visible'
+		) {
 			count += 1;
 		}
 		if (!seeking) {
@@ -147,11 +151,13 @@ function App() {
 	};
 
 	const handleMouseMove = () => {
+		if (!controlsRef.current) return;
 		controlsRef.current.style.visibility = 'visible';
 		count = 0;
 	};
 
 	const handleMouseLeave = () => {
+		if (!controlsRef.current) return;
 		controlsRef.current.style.visibility = 'hidden';
 		count = 0;
 	};
@@ -163,31 +169,30 @@ function App() {
 	};
 
 	const addBookmark = () => {
-		// const canvas = canvasRef.current;
-		// if (canvas && playerRef.current) {
-		// 	canvas.width = 160;
-		// 	canvas.height = 90;
+		const canvas = canvasRef.current;
+		if (canvas && playerRef.current) {
+			canvas.width = 160;
+			canvas.height = 90;
 
-		// 	const ctx = canvas.getContext('2d');
+			const ctx = canvas.getContext('2d');
 
-		// 	if (ctx) {
-		// 		const image = playerRef.current.getSnapshotBeforeUpdate;
-		// 		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-		// 	}
+			if (ctx) {
+				const video = playerRef.current.getInternalPlayer();
+				captureVideoFrame(video, 'jpeg', 0.92, canvas);
+			}
 
-		// 	const dataUri = canvas.toDataURL();
-		// 	canvas.width = 0;
-		// 	canvas.height = 0;
+			const dataUri = canvas.toDataURL();
+			canvas.width = 0;
+			canvas.height = 0;
 
-		// 	const bookmarksCopy: BookmarkType = [...bookmarks];
-		// 	bookmarksCopy.push({
-		// 		time: playerRef.current.getCurrentTime(),
-		// 		display: format(playerRef.current.getCurrentTime()),
-		// 		image: dataUri,
-		// 	});
-		// 	setBookmarks(bookmarksCopy);
-		// }
-		console.log('addBookmark');
+			const bookmarksCopy: BookmarkType = [...bookmarks];
+			bookmarksCopy.push({
+				time: playerRef.current.getCurrentTime(),
+				display: format(playerRef.current.getCurrentTime()),
+				image: dataUri,
+			});
+			setBookmarks(bookmarksCopy);
+		}
 	};
 
 	const currentTime =
@@ -213,7 +218,7 @@ function App() {
 					onMouseLeave={() => handleMouseLeave()}
 				>
 					<ReactPlayer
-						url="https://www.youtube.com/watch?v=RSf8QcJkGuk"
+						url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 						ref={playerRef}
 						width="100%"
 						height="100%"
@@ -222,6 +227,13 @@ function App() {
 						volume={volume}
 						playbackRate={parseFloat(playbackRate)}
 						onProgress={handleProgress}
+						config={{
+							file: {
+								attributes: {
+									crossOrigin: 'anonymous',
+								},
+							},
+						}}
 					/>
 					<PlayerControl
 						ref={controlsRef}
@@ -250,9 +262,12 @@ function App() {
 				<Row style={{ marginTop: 20 }}>
 					{bookmarks.map((bookmark, index) => (
 						<Col>
-							<Card key={index}>
-								<img crossOrigin="anonymous" src="" alt="" />
-								<p>Bookmark at 00:00</p>
+							<Card
+								key={index}
+								onClick={() => playerRef.current?.seekTo(bookmark.time)}
+							>
+								<img crossOrigin="anonymous" src={bookmark.image} alt="" />
+								<p>Bookmark at {bookmark.display}</p>
 							</Card>
 						</Col>
 					))}
