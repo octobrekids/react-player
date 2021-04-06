@@ -1,4 +1,4 @@
-export type incident = {
+export type IncidentTypes = {
 	x: number;
 	y: number;
 	height: number;
