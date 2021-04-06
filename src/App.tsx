@@ -22,6 +22,7 @@ import {
 import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
+import Canvas from './components/Canvas';
 //import { markers } from './mocks/markers';
 
 type BookmarkType = {
@@ -32,10 +33,15 @@ type BookmarkType = {
 
 function App() {
 	const dispatch = useDispatch();
+
 	const playerRef = useRef<ReactPlayer>(null);
 	const playerContainerRef = useRef<HTMLDivElement>(null);
 	const controlsRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const boundingBoxCanvasref = useRef<HTMLCanvasElement>(null);
+
+	let count = 0;
+	let id = 0;
 
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
 	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
@@ -54,9 +60,6 @@ function App() {
 		}
 		return `${mm}:${ss}`;
 	};
-
-	let count = 0;
-	let id = 0;
 
 	const playing = useSelector(
 		(state: StoresState) => state.videoPlayer.playing
@@ -190,13 +193,14 @@ function App() {
 			canvas.height = 0;
 
 			const bookmarksCopy: BookmarkType = [...bookmarks];
+			const markersCopy: MarkerType[] = [...markers];
+
 			bookmarksCopy.push({
 				time: playerRef.current.getCurrentTime(),
 				display: format(playerRef.current.getCurrentTime()),
 				image: dataUri,
 			});
 
-			const markersCopy: MarkerType[] = [...markers];
 			markersCopy.push({
 				id: id,
 				time: playerRef.current.getCurrentTime(),
@@ -227,6 +231,17 @@ function App() {
 		alert('marker clicked!');
 	};
 
+	const drawBoundingBox = () => {
+		const canvas = boundingBoxCanvasref.current;
+		if (canvas) {
+			const ctx = canvas.getContext('2d');
+			if (ctx) {
+				ctx.fillStyle = '#FF0000';
+				ctx.fillRect(0, 0, 150, 75);
+			}
+		}
+	};
+
 	return (
 		<Row justify="center">
 			<Col span={18}>
@@ -254,6 +269,7 @@ function App() {
 							},
 						}}
 					/>
+					<canvas ref={boundingBoxCanvasref} />
 					<PlayerControl
 						ref={controlsRef}
 						muted={muted}
