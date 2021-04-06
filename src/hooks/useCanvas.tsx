@@ -47,6 +47,37 @@ export const CanvasProvider: React.FC = ({ children }) => {
 		ctx?.restore();
 	};
 
+	const drawLabel = (incident: IncidentTypes) => {
+		// label setting
+		let fontBase = 32;
+		let fontSizeAfterRatio = 16;
+		fontSizeAfterRatio =
+			fontBase * ratio < 16 ? fontSizeAfterRatio : fontBase * ratio;
+
+		ctx!.font = `${fontSizeAfterRatio}px Arial`;
+		let textWidth = ctx?.measureText(incident.label).width;
+
+		ctx!.fillStyle = 'red';
+		const paddingLeft = 24;
+		const padding = paddingLeft * 2 * ratio;
+
+		if (textWidth) {
+			ctx?.fillRect(
+				incident.x * ratio - 1,
+				incident.y * ratio - (fontSizeAfterRatio + padding),
+				textWidth + padding * 2,
+				fontSizeAfterRatio + padding
+			);
+			ctx!.fillStyle = '#000';
+			ctx?.fillText(
+				incident.label,
+				incident.x * ratio + padding,
+				incident.y * ratio - padding * 0.75
+			);
+			ctx?.restore();
+		}
+	};
+
 	const clearCanvas = () => {
 		const canvas = canvasRef.current;
 		if (canvas) {
