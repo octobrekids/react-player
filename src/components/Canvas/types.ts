@@ -1,10 +1,6 @@
 export type CanvasPropTypes = {
-	dotLength?: number;
-	width?: number;
-	height?: number;
-	objects?: [];
+	width: number;
+	height: number;
+	incidents?: [];
 	played?: number;
-	focusing?: boolean;
-	isAdding?: boolean;
-	entities?: [];
 };
