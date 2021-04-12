@@ -23,6 +23,7 @@ import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
 import Canvas from './components/Canvas';
+import { incidents } from './mocks/incidents';
 //import { markers } from './mocks/markers';
 
 type BookmarkType = {
@@ -38,7 +39,6 @@ function App() {
 	const playerContainerRef = useRef<HTMLDivElement>(null);
 	const controlsRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const boundingBoxCanvasref = useRef<HTMLCanvasElement>(null);
 
 	let count = 0;
 	let id = 0;
@@ -231,16 +231,15 @@ function App() {
 		alert('marker clicked!');
 	};
 
-	const drawBoundingBox = () => {
-		const canvas = boundingBoxCanvasref.current;
-		if (canvas) {
-			const ctx = canvas.getContext('2d');
-			if (ctx) {
-				ctx.fillStyle = '#FF0000';
-				ctx.fillRect(0, 0, 150, 75);
-			}
-		}
-	};
+	let canvasWidth = 400;
+	canvasWidth = controlsRef.current?.clientWidth
+		? controlsRef.current?.clientWidth
+		: canvasWidth;
+
+	let canvasHeight = 400;
+	canvasHeight = controlsRef.current?.clientHeight
+		? controlsRef.current?.clientHeight
+		: canvasHeight;
 
 	return (
 		<Row justify="center">
@@ -269,7 +268,14 @@ function App() {
 							},
 						}}
 					/>
-					<canvas ref={boundingBoxCanvasref} />
+
+					<Canvas
+						width={canvasWidth}
+						height={canvasHeight}
+						incidents={incidents}
+						played={played}
+					/>
+
 					<PlayerControl
 						ref={controlsRef}
 						muted={muted}

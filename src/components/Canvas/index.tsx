@@ -1,31 +1,70 @@
 import React from 'react';
-import { Stage, Layer, Rect } from 'react-konva';
 import { CanvasPropTypes } from './types';
+import { Stage, Layer, Rect, Group, Text } from 'react-konva';
 
 const Canvas: React.FC<CanvasPropTypes> = (props) => {
-	const {
-		dotLength,
-		width,
-		height,
-		objects,
-		played,
-		focusing,
-		isAdding,
-		entities,
-	} = props;
-	const layerItem = [];
-	return (
-		<Stage>
-			<Layer>
+	const { width: canvasWidth, height: canvasHeight, played, incidents } = props;
+	const layerItems: JSX.Element[] = [];
+
+	const aspectRatio = canvasHeight / 1880;
+	console.log('AspectRatio ' + aspectRatio);
+	// eslint-disable-next-line array-callback-return
+	incidents.map((incident, index) => {
+		const { x, y, width, height, label } = incident;
+		console.log(played, incident.startVisibleAt);
+		if (
+			played * 10 >= incident.startVisibleAt &&
+			played * 10 < incident.startVisibleAt + 0.05
+		) {
+			const rect = (
 				<Rect
-					x={20}
-					y={50}
-					width={100}
-					height={100}
-					fill="red"
-					shadowBlur={10}
+					x={x * aspectRatio}
+					y={y * aspectRatio}
+					width={width * aspectRatio}
+					height={height * aspectRatio}
+					stroke={'red'}
+					strokeWidth={1}
 				/>
-			</Layer>
+			);
+
+			const labelText = (
+				<Text
+					offsetY={20 * aspectRatio}
+					x={x * aspectRatio}
+					y={y * aspectRatio}
+					fontFamily="Arial"
+					text={label}
+					fontSize={16}
+					lineHeight={1.2}
+					fill="#000"
+				/>
+			);
+
+			layerItems.push(
+				<Group
+					x={x * aspectRatio + 90}
+					y={y * aspectRatio}
+					key={index}
+					name={label}
+				>
+					{labelText}
+					{rect}
+				</Group>
+			);
+		}
+	});
+
+	return (
+		<Stage
+			style={{
+				position: 'absolute',
+				top: 0,
+				left: 0,
+			}}
+			width={canvasWidth}
+			height={canvasHeight}
+		>
+			<Layer>{layerItems}</Layer>
 		</Stage>
 	);
 };
