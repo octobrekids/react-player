@@ -1,17 +1,17 @@
 import { IncidentType } from '../models/incidents/type';
 import { getLinearInterpolatedValue } from './mathUtils';
 
-const INTERPOLATION_TYPE = {
-	LENGTH: 'LENG',
-	POSITION: 'POS',
-};
+enum INTERPOLATION_TYPE {
+	LENGTH = 'LENG',
+	POSITION = 'POS',
+}
 
 type InterpolateDateType = {
 	startIncident: IncidentType;
 	endIncident: IncidentType;
 	currentTime: number;
 	//TODO: interpolation type
-	type: string;
+	type: INTERPOLATION_TYPE;
 };
 
 type InterpolatePointType = {
