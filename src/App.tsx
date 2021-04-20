@@ -123,7 +123,8 @@ function App() {
 		}
 	};
 
-	const handleVideoSliderMouseUp = (e: any) => {
+	const handleVideoSliderMouseUp = (e: React.ChangeEvent<HTMLInputElement>) => {
+		console.log(e.target.value);
 		const played = parseFloat(e.target.value);
 		dispatch(setVideoSliderChange({ played: played / 100 }));
 		if (playerRef.current) {

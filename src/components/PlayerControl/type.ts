@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, MouseEventHandler } from 'react';
 import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
 import { MarkerType } from '../Marker/type';
 
@@ -11,7 +11,7 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onToggleFullScreen: () => void;
 	onVolumeSliderMouseUp: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	onVideoSliderMouseUp: React.MouseEventHandler<HTMLInputElement>;
+	onVideoSliderMouseUp: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderMouseDown: () => void;
 	onVolumeSliderMouseDown: () => void;
 	onChangeDisplayFormat: () => void;
