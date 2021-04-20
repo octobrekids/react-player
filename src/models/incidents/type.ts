@@ -1,6 +1,8 @@
-export type IncidentTypes = {
+export type AnnotationTypes = {
 	label: string;
-	color: string;
+	startTime: number;
+	endTime: number;
+	finish: boolean;
 	incidents: [
 		{
 			x: number;
