@@ -10,7 +10,6 @@ type InterpolateDateType = {
 	startIncident: IncidentType;
 	endIncident: IncidentType;
 	currentTime: number;
-	//TODO: interpolation type
 	type: INTERPOLATION_TYPE;
 };
 
