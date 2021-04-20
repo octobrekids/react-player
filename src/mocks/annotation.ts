@@ -1,8 +1,9 @@
 export const annotation = [
 	{
+		id: 'bird',
 		label: 'bird',
-		startTime: 0.682497,
-		endTime: 4.764457,
+		startTime: 0.25467,
+		endTime: 0.50467,
 		finish: false,
 		incidents: [
 			{

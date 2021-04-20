@@ -1,4 +1,5 @@
 export type AnnotationTypes = {
+	id: string;
 	label: string;
 	startTime: number;
 	endTime: number;

@@ -18,20 +18,23 @@ const Canvas: React.FC<CanvasPropTypes> = (props) => {
 	const aspectRatio = canvasHeight / 1880;
 	console.log('AspectRatio ' + aspectRatio);
 	// eslint-disable-next-line array-callback-return
-	annotations.map((annotation, index) => {
-		const { label, incidents } = annotation;
+	annotations.map((annotation) => {
+		const { label, incidents, id } = annotation;
 		for (let i = 0; i < incidents.length; i++) {
 			let x = 0;
 			let y = 0;
 			let width = 0;
 			let height = 0;
-
-			if (played >= incidents[i].time) {
-				if (i !== incidents.length - 1 && played >= incidents[i + 1].time) {
+			if (played >= incidents[i].time / 10) {
+				if (
+					i !== incidents.length - 1 &&
+					played >= incidents[i + 1].time / 10
+				) {
 					continue;
 				}
 				if (i === incidents.length - 1) {
 					({ x, y, width, height } = incidents[i]);
+					console.log(x, y, width, height, incidents[i].time);
 				} else {
 					const interpoArea = getInterpolatedData({
 						startIncident: incidents[i],
@@ -78,7 +81,8 @@ const Canvas: React.FC<CanvasPropTypes> = (props) => {
 				<Group
 					x={x * aspectRatio + 90}
 					y={y * aspectRatio}
-					key={index}
+					//TODO: fix random key
+					key={Math.random()}
 					name={label}
 				>
 					{labelText}
