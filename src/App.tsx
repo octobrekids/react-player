@@ -46,7 +46,7 @@ function App() {
 
 	const [videoState, setVideoState] = useState<VideoPlayerStateType>({
 		muted: false,
-		playing: false,
+		isPlaying: false,
 		volume: 0,
 		playbackRate: '1',
 		seeking: false,
@@ -88,9 +88,15 @@ function App() {
 		(state: StoresState) => state.videoPlayer.seeking
 	);
 
-	const handlePlaying = () => {
-		dispatch(setPlaying());
+	const handleVideoPlayPause = () => {
+		setVideoState((prevState) => ({
+			...prevState,
+			isPlaying: !prevState.isPlaying,
+		}));
 	};
+	// const handleVideoPlayPause = () => {
+	// 	dispatch(setPlaying());
+	// };
 
 	const handleRewind = () => {
 		if (playerRef.current) {
@@ -298,7 +304,7 @@ function App() {
 						playing={playing}
 						onRewind={handleRewind}
 						onFastForward={handleFastForward}
-						onPlaying={handlePlaying}
+						onPlaying={handleVideoPlayPause}
 						onMute={handleMute}
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={playbackRate}
