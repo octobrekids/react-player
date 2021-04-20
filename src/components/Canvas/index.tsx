@@ -1,21 +1,55 @@
 import React from 'react';
 import { CanvasPropTypes } from './types';
 import { Stage, Layer, Rect, Group, Text } from 'react-konva';
+import {
+	getInterpolatedData,
+	INTERPOLATION_TYPE,
+} from '../../utils/interpolationUtils';
 
 const Canvas: React.FC<CanvasPropTypes> = (props) => {
-	const { width: canvasWidth, height: canvasHeight, played, incidents } = props;
+	const {
+		width: canvasWidth,
+		height: canvasHeight,
+		played,
+		annotations,
+	} = props;
 	const layerItems: JSX.Element[] = [];
 
 	const aspectRatio = canvasHeight / 1880;
 	console.log('AspectRatio ' + aspectRatio);
 	// eslint-disable-next-line array-callback-return
-	incidents.map((incident, index) => {
-		const { x, y, width, height, label } = incident;
-		console.log(played, incident.startVisibleAt);
-		if (
-			played * 10 >= incident.startVisibleAt &&
-			played * 10 < incident.startVisibleAt + 0.05
-		) {
+	annotations.map((annotation, index) => {
+		const { label, incidents } = annotation;
+		for (let i = 0; i < incidents.length; i++) {
+			let x = 0;
+			let y = 0;
+			let width = 0;
+			let height = 0;
+
+			if (played >= incidents[i].time) {
+				if (i !== incidents.length - 1 && played >= incidents[i + 1].time) {
+					continue;
+				}
+				if (i === incidents.length - 1) {
+					({ x, y, width, height } = incidents[i]);
+				} else {
+					const interpoArea = getInterpolatedData({
+						startIncident: incidents[i],
+						endIncident: incidents[i + 1],
+						currentTime: played,
+						type: INTERPOLATION_TYPE.LENGTH,
+					});
+					const interpoPos = getInterpolatedData({
+						startIncident: incidents[i],
+						endIncident: incidents[i + 1],
+						currentTime: played,
+						type: INTERPOLATION_TYPE.POSITION,
+					});
+					({ x, y } = interpoPos);
+					({ width, height } = interpoArea);
+				}
+			}
+
 			const rect = (
 				<Rect
 					x={x * aspectRatio}
