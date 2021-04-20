@@ -3,13 +3,13 @@ export type AnnotationTypes = {
 	startTime: number;
 	endTime: number;
 	finish: boolean;
-	incidents: [
-		{
-			x: number;
-			y: number;
-			height: number;
-			width: number;
-			time: number;
-		}
-	];
+	incidents: IncidentType[];
+};
+
+export type IncidentType = {
+	x: number;
+	y: number;
+	height: number;
+	width: number;
+	time: number;
 };
