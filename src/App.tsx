@@ -23,7 +23,7 @@ import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
 import Canvas from './components/Canvas';
-import { incidents } from './mocks/incidents';
+import { annotation } from './mocks/annotation';
 //import { markers } from './mocks/markers';
 
 type BookmarkType = {
@@ -272,7 +272,7 @@ function App() {
 					<Canvas
 						width={canvasWidth}
 						height={canvasHeight}
-						incidents={incidents}
+						annotations={annotation}
 						played={played}
 					/>
 

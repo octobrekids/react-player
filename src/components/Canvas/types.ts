@@ -1,8 +1,8 @@
-import { IncidentTypes } from '../../models/incidents/type';
+import { AnnotationTypes } from '../../models/incidents/type';
 
 export type CanvasPropTypes = {
 	width: number;
 	height: number;
-	incidents: IncidentTypes[];
+	annotations: AnnotationTypes[];
 	played: number;
 };
