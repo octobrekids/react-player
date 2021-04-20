@@ -24,6 +24,7 @@ import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
 import Canvas from './components/Canvas';
 import { annotation } from './mocks/annotation';
+import { VideoPlayerStateType } from './models/videoPlayer/type';
 //import { markers } from './mocks/markers';
 
 type BookmarkType = {
@@ -43,6 +44,19 @@ function App() {
 	let count = 0;
 	let id = 0;
 
+	const [videoState, setVideoState] = useState<VideoPlayerStateType>({
+		muted: false,
+		playing: false,
+		volume: 0,
+		playbackRate: '1',
+		seeking: false,
+		loop: false,
+		duration: 0,
+		played: 0,
+		pip: false,
+		controls: false,
+		light: false,
+	});
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
 	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
 	const [markers, setMarkers] = useState<MarkerType[]>([]);
