@@ -24,6 +24,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onMute,
 			onVolumeSliderMouseUp,
 			onVolumeSliderMouseDown,
+			onVolumeSliderChange,
 			onVideoSliderMouseUp,
 			onVideoSliderMouseDown,
 			onVideoSliderChange,
@@ -133,6 +134,9 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 										min={0}
 										max={100}
 										played={muted ? 0 : volume * 100}
+										onChangeSlider={(e: React.ChangeEvent<HTMLInputElement>) =>
+											onVolumeSliderChange(e)
+										}
 										onMouseUpSlider={() => onVolumeSliderMouseUp()}
 										onMouseDownSlider={() => onVolumeSliderMouseDown()}
 									/>
