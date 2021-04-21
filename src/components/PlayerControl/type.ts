@@ -10,10 +10,11 @@ export type PlayerControlPropsType = initVideoPlayerStateType & {
 	onPlaybackRateChange: (value: string) => void;
 	onToggleFullScreen: () => void;
 	onVolumeSliderMouseUp: () => void;
+	onVolumeSliderMouseDown: () => void;
+	onVolumeSliderChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	onVideoSliderMouseUp: () => void;
 	onVideoSliderMouseDown: () => void;
-	onVolumeSliderMouseDown: () => void;
 	onChangeDisplayFormat: () => void;
 	elapsedTime: string;
 	totalDuration: string;

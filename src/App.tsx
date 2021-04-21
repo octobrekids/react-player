@@ -55,6 +55,7 @@ function App() {
 		controls: false,
 		light: false,
 	});
+
 	const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
 	const [bookmarks, setBookmarks] = useState<BookmarkType>([]);
 	const [markers, setMarkers] = useState<MarkerType[]>([]);
@@ -93,26 +94,34 @@ function App() {
 	};
 
 	const handleMute = () => {
-		dispatch(setMuted());
-		if (muted !== false) {
-			setVolume({ volume: 50 / 100, muted: false });
+		setVideoState((prevState) => ({
+			...prevState,
+			muted: !prevState.muted,
+		}));
+		if (videoState.muted !== false) {
+			setVideoState((prevState) => ({
+				...prevState,
+				volume: 50 / 100,
+				muted: false,
+			}));
 		}
 	};
 
-	const handleVolumeSliderMouseUp = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		dispatch(
-			setVolumeSeekDown({
-				seeking: false,
-				volume: parseFloat(e.target.value) / 100,
-			})
-		);
-		dispatch(setVolumeSliderMouseUp({ seeking: false }));
+	const handleVolumeSliderMouseUp = () => {
+		setVideoState((prevState) => ({ ...prevState, seeking: false }));
 	};
 
 	const handleVolumeSliderMouseDown = () => {
-		dispatch(setVolumeSliderMouseDown({ seeking: true }));
+		setVideoState((prevState) => ({
+			...prevState,
+			seeking: true,
+			isPlaying: false,
+		}));
+	};
+
+	const handleVolumeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const volume = parseFloat(e.target.value);
+		setVideoState((prevState) => ({ ...prevState, volume: volume / 100 }));
 	};
 
 	const handlePlaybackRateChange = (value: string) => {
@@ -292,12 +301,13 @@ function App() {
 						onPlaybackRateChange={handlePlaybackRateChange}
 						playbackRate={videoState.playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
-						onVolumeSliderMouseUp={handleVolumeSliderMouseUp}
 						played={videoState.played}
 						onVideoSliderChange={handleVideoSliderChange}
 						onVideoSliderMouseUp={handleVideoSliderMouseUp}
 						onVideoSliderMouseDown={handleVideoSliderMouseDown}
 						onVolumeSliderMouseDown={handleVolumeSliderMouseDown}
+						onVolumeSliderMouseUp={handleVolumeSliderMouseUp}
+						onVolumeSliderChange={handleVolumeSliderChange}
 						onChangeDisplayFormat={handleDisplayFormat}
 						elapsedTime={elapsedTime}
 						totalDuration={totalDuration}
