@@ -26,6 +26,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 			onVolumeSliderMouseDown,
 			onVideoSliderMouseUp,
 			onVideoSliderMouseDown,
+			onVideoSliderChange,
 			volume,
 			playbackRate,
 			onPlaybackRateChange,
@@ -85,8 +86,11 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 							min={0}
 							max={100}
 							played={played * 100}
+							onChangeSlider={(e: React.ChangeEvent<HTMLInputElement>) =>
+								onVideoSliderChange(e)
+							}
 							onMouseDownSlider={() => onVideoSliderMouseDown()}
-							onMouseUpSlider={(e: any) => onVideoSliderMouseUp(e)}
+							onMouseUpSlider={() => onVideoSliderMouseUp()}
 						/>
 						{markers &&
 							markers.map((marker, index) => {
@@ -129,7 +133,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 										min={0}
 										max={100}
 										played={muted ? 0 : volume * 100}
-										onMouseUpSlider={(e: any) => onVolumeSliderMouseUp(e)}
+										onMouseUpSlider={() => onVolumeSliderMouseUp()}
 										onMouseDownSlider={() => onVolumeSliderMouseDown()}
 									/>
 								</div>
