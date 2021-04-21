@@ -34,8 +34,6 @@ type BookmarkType = {
 }[];
 
 function App() {
-	const dispatch = useDispatch();
-
 	const playerRef = useRef<ReactPlayer>(null);
 	const playerContainerRef = useRef<HTMLDivElement>(null);
 	const controlsRef = useRef<HTMLDivElement>(null);
@@ -75,28 +73,12 @@ function App() {
 		return `${mm}:${ss}`;
 	};
 
-	const playing = useSelector(
-		(state: StoresState) => state.videoPlayer.playing
-	);
-	const muted = useSelector((state: StoresState) => state.videoPlayer.muted);
-	const volume = useSelector((state: StoresState) => state.videoPlayer.volume);
-	const playbackRate = useSelector(
-		(state: StoresState) => state.videoPlayer.playbackRate
-	);
-	const played = useSelector((state: StoresState) => state.videoPlayer.played);
-	const seeking = useSelector(
-		(state: StoresState) => state.videoPlayer.seeking
-	);
-
 	const handleVideoPlayPause = () => {
 		setVideoState((prevState) => ({
 			...prevState,
 			isPlaying: !prevState.isPlaying,
 		}));
 	};
-	// const handleVideoPlayPause = () => {
-	// 	dispatch(setPlaying());
-	// };
 
 	const handleRewind = () => {
 		if (playerRef.current) {
@@ -143,23 +125,24 @@ function App() {
 		}
 	};
 
-	const handleVideoSliderMouseUp = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
-		const played = parseFloat(e.target.value);
-		dispatch(setVideoSliderChange({ played: played / 100 }));
-		if (playerRef.current) {
-			playerRef.current.seekTo(played / 100, 'fraction');
-		}
-		dispatch(setVideoSliderMouseUp({ seeking: false }));
+	const handleVideoSliderMouseUp = () => {
+		setVideoState((prevState) => ({ ...prevState, seeking: false }));
 	};
 
 	const handleVideoSliderMouseDown = () => {
-		dispatch(setVideoSliderMouseDown({ seeking: true }));
+		setVideoState((prevState) => ({
+			...prevState,
+			seeking: true,
+			isPlaying: false,
+		}));
 	};
 
 	const handleVideoSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const played = parseFloat(e.target.value);
-		dispatch(setVideoSliderChange({ played: played / 100 }));
+		setVideoState((prevState) => ({ ...prevState, played: played / 100 }));
+		if (playerRef.current) {
+			playerRef.current.seekTo(played);
+		}
 	};
 
 	const handleProgress = (changeState: ProgressState) => {
@@ -276,10 +259,10 @@ function App() {
 						ref={playerRef}
 						width="100%"
 						height="100%"
-						muted={muted}
-						playing={playing}
-						volume={volume}
-						playbackRate={parseFloat(playbackRate)}
+						muted={videoState.muted}
+						playing={videoState.isPlaying}
+						volume={videoState.volume}
+						playbackRate={parseFloat(videoState.playbackRate)}
 						onProgress={handleProgress}
 						config={{
 							file: {
@@ -294,23 +277,23 @@ function App() {
 						width={canvasWidth}
 						height={canvasHeight}
 						annotations={annotation}
-						played={played}
+						played={videoState.played}
 					/>
 
 					<PlayerControl
 						ref={controlsRef}
-						muted={muted}
-						volume={volume}
-						playing={playing}
+						muted={videoState.muted}
+						volume={videoState.volume}
+						playing={videoState.isPlaying}
 						onRewind={handleRewind}
 						onFastForward={handleFastForward}
 						onPlaying={handleVideoPlayPause}
 						onMute={handleMute}
 						onPlaybackRateChange={handlePlaybackRateChange}
-						playbackRate={playbackRate}
+						playbackRate={videoState.playbackRate}
 						onToggleFullScreen={handleToggleFullScreen}
 						onVolumeSliderMouseUp={handleVolumeSliderMouseUp}
-						played={played}
+						played={videoState.played}
 						onVideoSliderChange={handleVideoSliderChange}
 						onVideoSliderMouseUp={handleVideoSliderMouseUp}
 						onVideoSliderMouseDown={handleVideoSliderMouseDown}
