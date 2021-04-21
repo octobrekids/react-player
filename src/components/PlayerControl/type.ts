@@ -1,8 +1,8 @@
-import { ChangeEvent, MouseEventHandler } from 'react';
-import { initVideoPlayerStateType } from '../../stores/videoReducer/type';
+import { ChangeEvent } from 'react';
+import { VideoPlayerStateType } from '../../models/videoPlayer/type';
 import { MarkerType } from '../Marker/type';
 
-export type PlayerControlPropsType = initVideoPlayerStateType & {
+export type PlayerControlPropsType = VideoPlayerStateType & {
 	onPlaying: () => void;
 	onFastForward: () => void;
 	onRewind: () => void;

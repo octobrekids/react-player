@@ -16,7 +16,7 @@ import Marker from '../Marker';
 const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 	(props, ref) => {
 		const {
-			playing,
+			isPlaying,
 			muted,
 			onPlaying,
 			onFastForward,
@@ -63,7 +63,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 				</Col>
 				<Col>
 					<div className="controlIcons">
-						{playing ? (
+						{isPlaying ? (
 							<PauseOutlined onClick={() => onPlaying()} />
 						) : (
 							<CaretRightOutlined onClick={() => onPlaying()} />
@@ -111,7 +111,7 @@ const PlayerControl = forwardRef<HTMLDivElement, PlayerControlPropsType>(
 						<Row justify="space-around">
 							<Col>
 								<div className="bottomIcons">
-									{playing ? (
+									{isPlaying ? (
 										<PauseOutlined onClick={() => onPlaying()} />
 									) : (
 										<CaretRightOutlined onClick={() => onPlaying()} />

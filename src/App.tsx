@@ -4,12 +4,11 @@ import { Row, Col, Card } from 'antd';
 import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
 import screenful from 'screenfull';
-import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
 import Canvas from './components/Canvas';
 import { annotation } from './mocks/annotation';
-import { VideoPlayerStateType } from './models/videoPlayer/type';
+import { ProgressState, VideoPlayerStateType } from './models/videoPlayer/type';
 //import { markers } from './mocks/markers';
 
 type BookmarkType = {
@@ -281,7 +280,7 @@ function App() {
 						ref={controlsRef}
 						muted={videoState.muted}
 						volume={videoState.volume}
-						playing={videoState.isPlaying}
+						isPlaying={videoState.isPlaying}
 						onRewind={handleRewind}
 						onFastForward={handleFastForward}
 						onPlaying={handleVideoPlayPause}
