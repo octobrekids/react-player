@@ -16,7 +16,7 @@ const Canvas: React.FC<CanvasPropTypes> = (props) => {
 	const layerItems: JSX.Element[] = [];
 
 	const aspectRatio = canvasHeight / 1880;
-	console.log('AspectRatio ' + aspectRatio);
+
 	// eslint-disable-next-line array-callback-return
 	annotations.map((annotation) => {
 		const { label, incidents, id, startTime, endTime } = annotation;
@@ -25,7 +25,7 @@ const Canvas: React.FC<CanvasPropTypes> = (props) => {
 			let y = 0;
 			let width = 0;
 			let height = 0;
-			console.log(played + 'played');
+
 			if (played >= startTime / 10 && played < endTime / 10) {
 				if (
 					i !== incidents.length - 1 &&
@@ -35,7 +35,6 @@ const Canvas: React.FC<CanvasPropTypes> = (props) => {
 				}
 				if (i === incidents.length - 1) {
 					({ x, y, width, height } = incidents[i]);
-					console.log(x, y, width, height, incidents[i].time, played);
 				} else {
 					const interpoArea = getInterpolatedData({
 						startIncident: incidents[i],
