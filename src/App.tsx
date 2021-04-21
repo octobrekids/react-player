@@ -3,22 +3,7 @@ import './App.css';
 import { Row, Col, Card } from 'antd';
 import ReactPlayer from 'react-player';
 import PlayerControl from './components/PlayerControl/PlayerControl';
-import { useDispatch, useSelector } from 'react-redux';
-import { StoresState } from './stores';
 import screenful from 'screenfull';
-import {
-	setMuted,
-	setPlaybackRate,
-	setPlaying,
-	setProgress,
-	setVideoSliderChange,
-	setVideoSliderMouseDown,
-	setVideoSliderMouseUp,
-	setVolume,
-	setVolumeSeekDown,
-	setVolumeSliderMouseDown,
-	setVolumeSliderMouseUp,
-} from './stores/videoReducer';
 import { ProgressState } from './stores/videoReducer/type';
 import { captureVideoFrame } from './utils/captureVideoFrame';
 import { MarkerType } from './components/Marker/type';
@@ -125,7 +110,7 @@ function App() {
 	};
 
 	const handlePlaybackRateChange = (value: string) => {
-		dispatch(setPlaybackRate({ playbackRate: value }));
+		setVideoState((prevState) => ({ ...prevState, playbackRate: value }));
 	};
 
 	const handleToggleFullScreen = () => {
@@ -165,8 +150,11 @@ function App() {
 		) {
 			count += 1;
 		}
-		if (!seeking) {
-			dispatch(setProgress({ played: changeState.played }));
+		if (!videoState.seeking) {
+			setVideoState((prevState) => ({
+				...prevState,
+				played: changeState.played,
+			}));
 		}
 	};
 
